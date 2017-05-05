@@ -2,6 +2,7 @@ package com.gt.examsystem.service;
 
 import com.gt.examsystem.dto.ReqAddQuestion;
 import com.gt.examsystem.dto.ReqSelectQuestion;
+import com.gt.examsystem.dto.ReqUpdateQuestion;
 import com.gt.examsystem.dto.ResBaseDTO;
 import com.gt.examsystem.entity.QuestionBankInfo;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public interface QuestionBankService {
 
     ResBaseDTO<String> deleteQuestion( Integer questionId );
 
-    ResBaseDTO<String> updateQuestion( ReqAddQuestion reqAddQuestion );
+    ResBaseDTO<String> updateQuestion( ReqUpdateQuestion reqUpdateQuestion );
 
     ResBaseDTO<QuestionBankInfo> selectQuestion( ReqSelectQuestion reqSelectQuestion );
 }

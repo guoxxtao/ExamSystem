@@ -9,8 +9,6 @@ import javax.validation.constraints.NotNull;
  */
 public class ReqAddQuestion {
 
-    @NotNull(message = "id不能为空")
-    private Integer questionId;
     /*
     * 题目类型
     * */
@@ -34,14 +32,6 @@ public class ReqAddQuestion {
     * 题目解析
     * */
     private String questionParse;
-
-    public Integer getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId( Integer questionId ) {
-        this.questionId = questionId;
-    }
 
     public Integer getQuestionType() {
         return questionType;

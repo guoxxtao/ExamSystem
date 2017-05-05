@@ -2,6 +2,7 @@ package com.gt.examsystem.service.impl;
 
 import com.gt.examsystem.dto.ReqAddQuestion;
 import com.gt.examsystem.dto.ReqSelectQuestion;
+import com.gt.examsystem.dto.ReqUpdateQuestion;
 import com.gt.examsystem.dto.ResBaseDTO;
 import com.gt.examsystem.entity.QuestionBankInfo;
 import com.gt.examsystem.mapper.QuestionBankMapper;
@@ -64,11 +65,11 @@ public class QuestionBankServiceImpl implements QuestionBankService {
     }
 
     @Override
-    public ResBaseDTO<String> updateQuestion( ReqAddQuestion reqAddQuestion ) {
+    public ResBaseDTO<String> updateQuestion( ReqUpdateQuestion reqUpdateQuestion ) {
         ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
 
-        if (reqAddQuestion != null) {
-            Integer flag = questionBankMapper.updateQuestion(reqAddQuestion);
+        if (reqUpdateQuestion != null) {
+            Integer flag = questionBankMapper.updateQuestion(reqUpdateQuestion);
 
             if (flag > 0) {
                 resBaseDTO.setData("");

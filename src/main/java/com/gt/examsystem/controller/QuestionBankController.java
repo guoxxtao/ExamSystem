@@ -1,6 +1,7 @@
 package com.gt.examsystem.controller;
 
 import com.gt.examsystem.dto.ReqAddQuestion;
+import com.gt.examsystem.dto.ReqQuestionDTO;
 import com.gt.examsystem.dto.ResBaseDTO;
 import com.gt.examsystem.service.QuestionBankService;
 import org.slf4j.Logger;
@@ -35,27 +36,41 @@ public class QuestionBankController {
     public ResBaseDTO<String> addQuestion( @RequestBody @Validated ReqAddQuestion reqAddQuestion, BindingResult bindingResult, HttpSession httpSession ) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("addQuestion(questionBankInfo = {}) - start", reqAddQuestion);
+            LOGGER.debug("addQuestion(reqAddQuestion = {}) - start", reqAddQuestion);
         }
 
         ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
-        if (httpSession.getAttribute("isLogin") == "1") {
-            if (!bindingResult.hasErrors()) {
-                resBaseDTO = questionBankService.addQuestion(reqAddQuestion);
-                resBaseDTO.setData("");
-                resBaseDTO.setFlag(1);
-                resBaseDTO.setMessage("ok");
-            }
-        } else {
+
+        if (bindingResult.hasErrors()) {
             resBaseDTO.setFlag(0);
             resBaseDTO.setMessage(bindingResult.getAllErrors().get(0).getDefaultMessage());
             resBaseDTO.setData(null);
+        } else {
+            resBaseDTO = questionBankService.addQuestion(reqAddQuestion);
         }
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("addQuestion(resBaseDTO = {}) - end", resBaseDTO);
         }
 
+        return resBaseDTO;
+    }
+
+    @RequestMapping(value = "/deleteQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public ResBaseDTO<String> deleteQuestion( @RequestBody ReqQuestionDTO reqQuestionDTO, HttpSession httpSession ) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("deleteQuestion(questionId = {}) - start", reqQuestionDTO.getQuestionId());
+        }
+
+        ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
+
+        resBaseDTO = questionBankService.deleteQuestion(reqQuestionDTO.getQuestionId());
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("deleteQuestion(resBaseDTO = {}) - end", resBaseDTO);
+        }
         return resBaseDTO;
     }
 }

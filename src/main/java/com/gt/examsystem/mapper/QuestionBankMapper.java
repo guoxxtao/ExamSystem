@@ -2,6 +2,7 @@ package com.gt.examsystem.mapper;
 
 import com.gt.examsystem.dto.ReqAddQuestion;
 import com.gt.examsystem.dto.ReqSelectQuestion;
+import com.gt.examsystem.dto.ReqUpdateQuestion;
 import com.gt.examsystem.entity.QuestionBankInfo;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,10 +27,10 @@ public interface QuestionBankMapper {
     /**
      * 更新题目
      *
-     * @param reqAddQuestion
+     * @param reqUpdateQuestion
      * @return
      */
-    Integer updateQuestion(@Param("questionBankInfo") ReqAddQuestion reqAddQuestion );
+    Integer updateQuestion(@Param("reqUpdateQuestion") ReqUpdateQuestion reqUpdateQuestion );
     /**
      * 查询题目（支持模糊查询）
      *

@@ -7,6 +7,7 @@
     <resultMap type="com.gt.examsystem.entity.QuestionBankInfo" id="resultMap">
         <id property="questionId" column="questionId"/>
         <result property="questionTitle" column="questionTitle"/>
+        <result property="questionType" column="questionType"/>
         <result property="questionAnswer" column="questionAnswer"/>
         <result property="questionOptionA" column="questionOptionA"/>
         <result property="questionOptionB" column="questionOptionB"/>
@@ -24,14 +25,14 @@
         )
         VALUES
         (
-        #{questionType, jdbcType=INTEGER },
-        #{questionTitle, jdbcType=VARCHAR },
-        #{questionAnswer, jdbcType=VARCHAR },
-        #{questionOptionA, jdbcType=VARCHAR },
-        #{questionOptionB, jdbcType=VARCHAR },
-        #{questionOptionC, jdbcType=VARCHAR },
-        #{questionOptionD, jdbcType=VARCHAR },
-        #{questionParse, jdbcType=VARCHAR }
+        #{reqAddQuestion.questionType, jdbcType=INTEGER },
+        #{reqAddQuestion.questionTitle, jdbcType=VARCHAR },
+        #{reqAddQuestion.questionAnswer, jdbcType=VARCHAR },
+        #{reqAddQuestion.questionOptionA, jdbcType=VARCHAR },
+        #{reqAddQuestion.questionOptionB, jdbcType=VARCHAR },
+        #{reqAddQuestion.questionOptionC, jdbcType=VARCHAR },
+        #{reqAddQuestion.questionOptionD, jdbcType=VARCHAR },
+        #{reqAddQuestion.questionParse, jdbcType=VARCHAR }
         )
     </insert>
 
@@ -49,16 +50,19 @@
         WHERE questionId = #{questionId ,jdbcType=INTEGER }
     </update>
 
-    <delete id="delete">
+    <delete id="deleteQuestion">
         DELETE FROM t_question_bank
         WHERE questionId = #{questionId ,jdbcType=INTEGER }
     </delete>
 
     <select id="selectQuestion" resultMap="resultMap" resultType="com.gt.examsystem.entity.QuestionBankInfo">
-        SELECT  questionType,questionTitle,questionAnswer,questionOptionA,questionOptionB,questionOptionC,questionOptionD,questionParse
-        FROM    t_question_bank
-        WHERE   usable_state = 1
-        <if test=" questionId != null and questionId != '' "> AND questionId = #{questionId , jdbcType = INTEGER } </if>
-        <if test=" questionTitleLike != null and questionTitleLike != '' "> AND questionTitleLike LIKE '%#{questionTitle , jdbcType = INTEGER }%' </if>
+        SELECT
+        questionType,questionTitle,questionAnswer,questionOptionA,questionOptionB,questionOptionC,questionOptionD,questionParse
+        FROM t_question_bank
+        WHERE usable_state = 1
+        <if test=" questionId != null and questionId != '' ">AND questionId = #{questionId , jdbcType = INTEGER }</if>
+        <if test=" questionTitleLike != null and questionTitleLike != '' ">AND questionTitleLike LIKE
+            '%#{questionTitle , jdbcType = INTEGER }%'
+        </if>
     </select>
 </mapper>
