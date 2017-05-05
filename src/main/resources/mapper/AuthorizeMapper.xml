@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.examsystem.mapper.AuthorizeMapper">
+    <!-- 解决表名与字段不匹配 -->
+    <resultMap type="java.lang.Integer" id="userType">
+        <result property="userType" column="user_type"/>
+        <result property="userId" column="user_id"/>
+        <result property="password" column="user_password"/>
+    </resultMap>
+
+    <select id="validateUser" resultMap="userType" resultType="java.lang.Integer">
+        SELECT user_type
+        FROM t_user_info
+        WHERE user_id = #{userId , jdbcType = VARCHAR}
+        AND user_password =  #{password, jdbcType = VARCHAR}
+        AND usable_state = 1
+    </select>
+</mapper>
