@@ -1,9 +1,6 @@
 package com.gt.examsystem.service.impl;
 
-import com.gt.examsystem.dto.ReqAddQuestion;
-import com.gt.examsystem.dto.ReqSelectQuestion;
-import com.gt.examsystem.dto.ReqUpdateQuestion;
-import com.gt.examsystem.dto.ResBaseDTO;
+import com.gt.examsystem.dto.*;
 import com.gt.examsystem.entity.QuestionBankInfo;
 import com.gt.examsystem.mapper.QuestionBankMapper;
 import com.gt.examsystem.service.QuestionBankService;
@@ -11,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guotao on 2017/5/5.
@@ -35,12 +35,13 @@ public class QuestionBankServiceImpl implements QuestionBankService {
                 resBaseDTO.setData("");
                 resBaseDTO.setFlag(1);
                 resBaseDTO.setMessage("ok");
+                return resBaseDTO;
             }
-        } else {
-            resBaseDTO.setData("");
-            resBaseDTO.setFlag(0);
-            resBaseDTO.setMessage("题目添加错误！");
         }
+        resBaseDTO.setData("");
+        resBaseDTO.setFlag(0);
+        resBaseDTO.setMessage("题目添加错误！");
+
         return resBaseDTO;
     }
 
@@ -55,12 +56,13 @@ public class QuestionBankServiceImpl implements QuestionBankService {
                 resBaseDTO.setData("");
                 resBaseDTO.setFlag(1);
                 resBaseDTO.setMessage("ok");
+                return resBaseDTO;
             }
-        } else {
-            resBaseDTO.setData("");
-            resBaseDTO.setFlag(0);
-            resBaseDTO.setMessage("题目删除错误！");
         }
+        resBaseDTO.setData("");
+        resBaseDTO.setFlag(0);
+        resBaseDTO.setMessage("题目删除错误！");
+
         return resBaseDTO;
     }
 
@@ -75,33 +77,37 @@ public class QuestionBankServiceImpl implements QuestionBankService {
                 resBaseDTO.setData("");
                 resBaseDTO.setFlag(1);
                 resBaseDTO.setMessage("ok");
+                return resBaseDTO;
             }
-        } else {
-            resBaseDTO.setData("");
-            resBaseDTO.setFlag(0);
-            resBaseDTO.setMessage("题目更新错误！");
         }
+        resBaseDTO.setData("");
+        resBaseDTO.setFlag(0);
+        resBaseDTO.setMessage("题目更新错误！");
+
         return resBaseDTO;
     }
 
     @Override
-    public ResBaseDTO<QuestionBankInfo> selectQuestion( ReqSelectQuestion reqSelectQuestion ) {
-        ResBaseDTO<QuestionBankInfo> resBaseDTO = new ResBaseDTO<QuestionBankInfo>();
-        QuestionBankInfo questionBankInfo = new QuestionBankInfo();
+    public ResBaseDTO<List<QuestionBankInfo>> selectQuestion( ReqSelectQuestion reqSelectQuestion ) {
+        ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
+        List<QuestionBankInfo> questionBankInfoList = new ArrayList<QuestionBankInfo>();
 
+        ResSelectQuestionDTO resSelectQuestionDTO = new ResSelectQuestionDTO();
         if (reqSelectQuestion != null) {
-            questionBankInfo = questionBankMapper.selectQuestion(reqSelectQuestion);
+            questionBankInfoList = questionBankMapper.selectQuestion(reqSelectQuestion);
 
-            if (questionBankInfo != null) {
+            if (questionBankInfoList != null) {
+
                 resBaseDTO.setFlag(1);
                 resBaseDTO.setMessage("ok");
-                resBaseDTO.setData(questionBankInfo);
+                resBaseDTO.setData(questionBankInfoList);
+                return resBaseDTO;
             }
-        } else {
-            resBaseDTO.setData(null);
-            resBaseDTO.setFlag(0);
-            resBaseDTO.setMessage("查询条件不匹配！");
         }
+        resBaseDTO.setData(null);
+        resBaseDTO.setFlag(0);
+        resBaseDTO.setMessage("查询条件不匹配！");
+
 
         return resBaseDTO;
     }

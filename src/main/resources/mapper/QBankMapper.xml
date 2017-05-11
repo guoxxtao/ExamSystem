@@ -39,15 +39,15 @@
     <update id="updateQuestion">
         UPDATE t_question_bank
         SET
-        questionType=#{questionType, jdbcType=INTEGER },
-        questionTitle=#{questionTitle, jdbcType=VARCHAR },
-        questionAnswer=#{questionAnswer, jdbcType=VARCHAR },
-        questionOptionA=#{questionOptionA, jdbcType=VARCHAR },
-        questionOptionB=#{questionOptionB, jdbcType=VARCHAR },
-        questionOptionC=#{questionOptionC, jdbcType=VARCHAR },
-        questionOptionD=#{questionOptionD, jdbcType=VARCHAR },
-        questionParse=#{questionParse, jdbcType=VARCHAR }
-        WHERE questionId = #{questionId ,jdbcType=INTEGER }
+        questionType=#{reqUpdateQuestion.questionType, jdbcType=INTEGER },
+        questionTitle=#{reqUpdateQuestion.questionTitle, jdbcType=VARCHAR },
+        questionAnswer=#{reqUpdateQuestion.questionAnswer, jdbcType=VARCHAR },
+        questionOptionA=#{reqUpdateQuestion.questionOptionA, jdbcType=VARCHAR },
+        questionOptionB=#{reqUpdateQuestion.questionOptionB, jdbcType=VARCHAR },
+        questionOptionC=#{reqUpdateQuestion.questionOptionC, jdbcType=VARCHAR },
+        questionOptionD=#{reqUpdateQuestion.questionOptionD, jdbcType=VARCHAR },
+        questionParse=#{reqUpdateQuestion.questionParse, jdbcType=VARCHAR }
+        WHERE questionId = #{reqUpdateQuestion.questionId ,jdbcType=INTEGER }
     </update>
 
     <delete id="deleteQuestion">
@@ -57,12 +57,15 @@
 
     <select id="selectQuestion" resultMap="resultMap" resultType="com.gt.examsystem.entity.QuestionBankInfo">
         SELECT
-        questionType,questionTitle,questionAnswer,questionOptionA,questionOptionB,questionOptionC,questionOptionD,questionParse
+        *
         FROM t_question_bank
         WHERE usable_state = 1
-        <if test=" questionId != null and questionId != '' ">AND questionId = #{questionId , jdbcType = INTEGER }</if>
-        <if test=" questionTitleLike != null and questionTitleLike != '' ">AND questionTitleLike LIKE
-            '%#{questionTitle , jdbcType = INTEGER }%'
+        <if test=" reqSelectQuestion.questionId != null and reqSelectQuestion.questionId != '' "> AND questionId =
+            #{reqSelectQuestion.questionId , jdbcType = INTEGER }
+        </if>
+        <if test=" reqSelectQuestion.questionTitleLike != null and reqSelectQuestion.questionTitleLike != '' "> AND
+            questionTitle LIKE
+            '%'||'#{reqSelectQuestion.questionTitleLike , jdbcType = VARCHAR }'||'%'
         </if>
     </select>
 </mapper>

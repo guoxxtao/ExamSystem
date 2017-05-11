@@ -6,6 +6,8 @@ import com.gt.examsystem.dto.ReqUpdateQuestion;
 import com.gt.examsystem.entity.QuestionBankInfo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * Created by guotao on 2017/5/5.
  */
@@ -37,6 +39,6 @@ public interface QuestionBankMapper {
      * @param reqSelectQuestion
      * @return
      */
-    QuestionBankInfo selectQuestion(@Param("reqSelectQuestion") ReqSelectQuestion reqSelectQuestion );
+    List<QuestionBankInfo> selectQuestion( @Param("reqSelectQuestion") ReqSelectQuestion reqSelectQuestion );
 
 }

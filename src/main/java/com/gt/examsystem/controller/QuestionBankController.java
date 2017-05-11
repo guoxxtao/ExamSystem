@@ -1,8 +1,7 @@
 package com.gt.examsystem.controller;
 
-import com.gt.examsystem.dto.ReqAddQuestion;
-import com.gt.examsystem.dto.ReqQuestionDTO;
-import com.gt.examsystem.dto.ResBaseDTO;
+import com.gt.examsystem.dto.*;
+import com.gt.examsystem.entity.QuestionBankInfo;
 import com.gt.examsystem.service.QuestionBankService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by guotao on 2017/5/5.
@@ -70,6 +70,42 @@ public class QuestionBankController {
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("deleteQuestion(resBaseDTO = {}) - end", resBaseDTO);
+        }
+        return resBaseDTO;
+    }
+
+    @RequestMapping(value = "/updateQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public ResBaseDTO<String> updateQuestion( @RequestBody ReqUpdateQuestion reqUpdateQuestion, HttpSession httpSession ) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("updateQuestion(reqUpdateQuestion = {}) - start", reqUpdateQuestion);
+        }
+
+        ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
+
+        resBaseDTO = questionBankService.updateQuestion(reqUpdateQuestion);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("updateQuestion(resBaseDTO = {}) - end", resBaseDTO);
+        }
+        return resBaseDTO;
+    }
+
+    @RequestMapping(value = "/selectQuestion", method = RequestMethod.POST)
+    @ResponseBody
+    public ResBaseDTO<List<QuestionBankInfo>> selectQuestion( @RequestBody ReqSelectQuestion reqSelectQuestion, HttpSession httpSession ) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("selectQuestion(reqSelectQuestion = {}) - start", reqSelectQuestion);
+        }
+
+        ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
+
+        resBaseDTO = questionBankService.selectQuestion(reqSelectQuestion);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("selectQuestion(resBaseDTO = {}) - end", resBaseDTO);
         }
         return resBaseDTO;
     }
