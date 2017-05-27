@@ -19,4 +19,7 @@ public interface QuestionBankService {
     ResBaseDTO<String> updateQuestion( ReqUpdateQuestion reqUpdateQuestion );
 
     ResBaseDTO<List<QuestionBankInfo>> selectQuestion( ReqSelectQuestion reqSelectQuestion );
+
+    ResBaseDTO<List<QuestionBankInfo>> selectQuestionById( List<Integer> questionId );
+
 }

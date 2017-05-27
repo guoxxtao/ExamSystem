@@ -18,97 +18,121 @@ import java.util.List;
 @Service("questionBankServiceImpl")
 public class QuestionBankServiceImpl implements QuestionBankService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(QuestionBankServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(QuestionBankServiceImpl.class);
 
-    @Autowired
-    QuestionBankMapper questionBankMapper;
+	@Autowired
+	QuestionBankMapper questionBankMapper;
 
-    @Override
-    public ResBaseDTO<String> addQuestion( ReqAddQuestion reqAddQuestion ) {
+	@Override
+	public ResBaseDTO<String> addQuestion(ReqAddQuestion reqAddQuestion) {
 
-        ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
+		ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
 
-        if (reqAddQuestion != null) {
+		if (reqAddQuestion != null) {
 
-            Integer flag = questionBankMapper.addQuestion(reqAddQuestion);
-            if (flag > 0) {
-                resBaseDTO.setData("");
-                resBaseDTO.setFlag(1);
-                resBaseDTO.setMessage("ok");
-                return resBaseDTO;
-            }
-        }
-        resBaseDTO.setData("");
-        resBaseDTO.setFlag(0);
-        resBaseDTO.setMessage("题目添加错误！");
+			Integer flag = questionBankMapper.addQuestion(reqAddQuestion);
+			if (flag > 0) {
+				resBaseDTO.setData("");
+				resBaseDTO.setFlag(1);
+				resBaseDTO.setMessage("ok");
+				return resBaseDTO;
+			}
+		}
+		resBaseDTO.setData("");
+		resBaseDTO.setFlag(0);
+		resBaseDTO.setMessage("题目添加错误！");
 
-        return resBaseDTO;
-    }
+		return resBaseDTO;
+	}
 
-    @Override
-    public ResBaseDTO<String> deleteQuestion( Integer questionId ) {
+	@Override
+	public ResBaseDTO<String> deleteQuestion(Integer questionId) {
 
-        ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
-        if (questionId != null) {
-            Integer flag = questionBankMapper.deleteQuestion(questionId);
+		ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
+		if (questionId != null) {
+			Integer flag = questionBankMapper.deleteQuestion(questionId);
 
-            if (flag > 0) {
-                resBaseDTO.setData("");
-                resBaseDTO.setFlag(1);
-                resBaseDTO.setMessage("ok");
-                return resBaseDTO;
-            }
-        }
-        resBaseDTO.setData("");
-        resBaseDTO.setFlag(0);
-        resBaseDTO.setMessage("题目删除错误！");
+			if (flag > 0) {
+				resBaseDTO.setData("");
+				resBaseDTO.setFlag(1);
+				resBaseDTO.setMessage("ok");
+				return resBaseDTO;
+			}
+		}
+		resBaseDTO.setData("");
+		resBaseDTO.setFlag(0);
+		resBaseDTO.setMessage("题目删除错误！");
 
-        return resBaseDTO;
-    }
+		return resBaseDTO;
+	}
 
-    @Override
-    public ResBaseDTO<String> updateQuestion( ReqUpdateQuestion reqUpdateQuestion ) {
-        ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
+	@Override
+	public ResBaseDTO<String> updateQuestion(ReqUpdateQuestion reqUpdateQuestion) {
+		ResBaseDTO<String> resBaseDTO = new ResBaseDTO<String>();
 
-        if (reqUpdateQuestion != null) {
-            Integer flag = questionBankMapper.updateQuestion(reqUpdateQuestion);
+		if (reqUpdateQuestion != null) {
+			Integer flag = questionBankMapper.updateQuestion(reqUpdateQuestion);
 
-            if (flag > 0) {
-                resBaseDTO.setData("");
-                resBaseDTO.setFlag(1);
-                resBaseDTO.setMessage("ok");
-                return resBaseDTO;
-            }
-        }
-        resBaseDTO.setData("");
-        resBaseDTO.setFlag(0);
-        resBaseDTO.setMessage("题目更新错误！");
+			if (flag > 0) {
+				resBaseDTO.setData("");
+				resBaseDTO.setFlag(1);
+				resBaseDTO.setMessage("ok");
+				return resBaseDTO;
+			}
+		}
+		resBaseDTO.setData("");
+		resBaseDTO.setFlag(0);
+		resBaseDTO.setMessage("题目更新错误！");
 
-        return resBaseDTO;
-    }
+		return resBaseDTO;
+	}
 
-    @Override
-    public ResBaseDTO<List<QuestionBankInfo>> selectQuestion( ReqSelectQuestion reqSelectQuestion ) {
-        ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
-        List<QuestionBankInfo> questionBankInfoList = new ArrayList<QuestionBankInfo>();
+	@Override
+	public ResBaseDTO<List<QuestionBankInfo>> selectQuestion(ReqSelectQuestion reqSelectQuestion) {
+		ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
+		List<QuestionBankInfo> questionBankInfoList = new ArrayList<QuestionBankInfo>();
 
-        ResSelectQuestionDTO resSelectQuestionDTO = new ResSelectQuestionDTO();
-        if (reqSelectQuestion != null) {
-            questionBankInfoList = questionBankMapper.selectQuestion(reqSelectQuestion);
+		ResSelectQuestionDTO resSelectQuestionDTO = new ResSelectQuestionDTO();
+		if (reqSelectQuestion != null) {
+			questionBankInfoList = questionBankMapper.selectQuestion(reqSelectQuestion);
 
-            if (questionBankInfoList != null) {
+			if (questionBankInfoList != null && questionBankInfoList.size() > 0) {
 
-                resBaseDTO.setFlag(1);
-                resBaseDTO.setMessage("ok");
-                resBaseDTO.setData(questionBankInfoList);
-                return resBaseDTO;
-            }
-        }
-        resBaseDTO.setData(null);
-        resBaseDTO.setFlag(0);
-        resBaseDTO.setMessage("查询条件不匹配！");
+				resBaseDTO.setFlag(1);
+				resBaseDTO.setMessage("ok");
+				resBaseDTO.setData(questionBankInfoList);
+				return resBaseDTO;
+			}
+		}
+		resBaseDTO.setData(null);
+		resBaseDTO.setFlag(0);
+		resBaseDTO.setMessage("查询条件不匹配！");
 
 
-        return resBaseDTO;
-    }
+		return resBaseDTO;
+	}
+
+	@Override
+	public ResBaseDTO<List<QuestionBankInfo>> selectQuestionById(List<Integer> questionId) {
+
+		ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
+		List<QuestionBankInfo> questionBankInfoList = new ArrayList<QuestionBankInfo>();
+		if (questionId != null && questionId.size() > 0) {
+			questionBankInfoList = questionBankMapper.selectQuestionById(questionId);
+
+			if (questionBankInfoList != null) {
+
+				resBaseDTO.setFlag(1);
+				resBaseDTO.setMessage("ok");
+				resBaseDTO.setData(questionBankInfoList);
+				return resBaseDTO;
+			}
+		}
+		resBaseDTO.setData(null);
+		resBaseDTO.setFlag(0);
+		resBaseDTO.setMessage("查询条件不匹配！");
+
+
+		return resBaseDTO;
+	}
 }

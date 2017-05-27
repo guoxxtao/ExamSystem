@@ -4,7 +4,7 @@ package com.gt.examsystem.dto;
  *
  * 返回参数统一范例
  *
- * @author wangxy
+ * @author gt
  *
  * @version 1.0
  *

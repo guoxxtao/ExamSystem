@@ -5,23 +5,24 @@
     <!-- 解决表名与字段不匹配 -->
 
     <resultMap type="com.gt.examsystem.entity.QuestionBankInfo" id="resultMap">
-        <id property="questionId" column="questionId"/>
-        <result property="questionTitle" column="questionTitle"/>
-        <result property="questionType" column="questionType"/>
-        <result property="questionAnswer" column="questionAnswer"/>
-        <result property="questionOptionA" column="questionOptionA"/>
-        <result property="questionOptionB" column="questionOptionB"/>
-        <result property="questionOptionC" column="questionOptionC"/>
-        <result property="questionOptionD" column="questionOptionD"/>
-        <result property="questionParse" column="questionParse"/>
+        <id column="question_id" property="questionId"/>
+        <result column="question_title" property="questionTitle"/>
+        <result column="question_type" property="questionType"/>
+        <result column="question_direction_id" property="questionDirectionId"/>
+        <result column="question_answer" property="questionAnswer"/>
+        <result column="question_optionA" property="questionOptionA"/>
+        <result column="question_optionB" property="questionOptionB"/>
+        <result column="question_optionC" property="questionOptionC"/>
+        <result column="question_optionD" property="questionOptionD"/>
+        <result column="question_parse" property="questionParse"/>
     </resultMap>
 
     <insert id="addQuestion">
         INSERT INTO t_question_bank
         (
-        questionType,questionTitle,questionAnswer
-        ,questionOptionA,questionOptionB,questionOptionC,
-        questionOptionD,questionParse
+        question_type,question_title,question_answer
+        ,question_optionA,question_optionB,question_optionC,
+        question_optionD,question_parse,question_direction_id
         )
         VALUES
         (
@@ -32,27 +33,30 @@
         #{reqAddQuestion.questionOptionB, jdbcType=VARCHAR },
         #{reqAddQuestion.questionOptionC, jdbcType=VARCHAR },
         #{reqAddQuestion.questionOptionD, jdbcType=VARCHAR },
-        #{reqAddQuestion.questionParse, jdbcType=VARCHAR }
+        #{reqAddQuestion.questionParse, jdbcType=VARCHAR },
+        #{reqUpdateQuestion.questionDirectionId,jdbcType=INTEGER}
+
         )
     </insert>
 
     <update id="updateQuestion">
         UPDATE t_question_bank
         SET
-        questionType=#{reqUpdateQuestion.questionType, jdbcType=INTEGER },
-        questionTitle=#{reqUpdateQuestion.questionTitle, jdbcType=VARCHAR },
-        questionAnswer=#{reqUpdateQuestion.questionAnswer, jdbcType=VARCHAR },
-        questionOptionA=#{reqUpdateQuestion.questionOptionA, jdbcType=VARCHAR },
-        questionOptionB=#{reqUpdateQuestion.questionOptionB, jdbcType=VARCHAR },
-        questionOptionC=#{reqUpdateQuestion.questionOptionC, jdbcType=VARCHAR },
-        questionOptionD=#{reqUpdateQuestion.questionOptionD, jdbcType=VARCHAR },
-        questionParse=#{reqUpdateQuestion.questionParse, jdbcType=VARCHAR }
-        WHERE questionId = #{reqUpdateQuestion.questionId ,jdbcType=INTEGER }
+        question_type=#{reqUpdateQuestion.questionType, jdbcType=INTEGER },
+        question_title=#{reqUpdateQuestion.questionTitle, jdbcType=VARCHAR },
+        question_answer=#{reqUpdateQuestion.questionAnswer, jdbcType=VARCHAR },
+        question_optionA=#{reqUpdateQuestion.questionOptionA, jdbcType=VARCHAR },
+        question_optionB=#{reqUpdateQuestion.questionOptionB, jdbcType=VARCHAR },
+        question_optionC=#{reqUpdateQuestion.questionOptionC, jdbcType=VARCHAR },
+        question_optionD=#{reqUpdateQuestion.questionOptionD, jdbcType=VARCHAR },
+        question_parse=#{reqUpdateQuestion.questionParse, jdbcType=VARCHAR },
+        question_direction_id=#{reqUpdateQuestion.questionDirectionId,jdbcType=INTEGER}
+        WHERE question_id = #{reqUpdateQuestion.questionId ,jdbcType=INTEGER }
     </update>
 
     <delete id="deleteQuestion">
         DELETE FROM t_question_bank
-        WHERE questionId = #{questionId ,jdbcType=INTEGER }
+        WHERE question_id = #{questionId ,jdbcType=INTEGER }
     </delete>
 
     <select id="selectQuestion" resultMap="resultMap" resultType="com.gt.examsystem.entity.QuestionBankInfo">
@@ -60,12 +64,26 @@
         *
         FROM t_question_bank
         WHERE usable_state = 1
-        <if test=" reqSelectQuestion.questionId != null and reqSelectQuestion.questionId != '' "> AND questionId =
+        <if test=" reqSelectQuestion.questionId != null and reqSelectQuestion.questionId != '' "> AND question_id =
             #{reqSelectQuestion.questionId , jdbcType = INTEGER }
         </if>
         <if test=" reqSelectQuestion.questionTitleLike != null and reqSelectQuestion.questionTitleLike != '' "> AND
-            questionTitle LIKE
+            question_title LIKE
             '%'||'#{reqSelectQuestion.questionTitleLike , jdbcType = VARCHAR }'||'%'
         </if>
+        <if test=" reqSelectQuestion.questionDirectionId != null and reqSelectQuestion.questionId != '' "> AND question_direction_id =
+            #{reqSelectQuestion.questionDirectionId , jdbcType = INTEGER }
+        </if>
     </select>
+
+    <select id="selectQuestionById" resultMap="resultMap" resultType="com.gt.examsystem.entity.QuestionBankInfo">
+        select * from t_question_bank where usable_state = 1
+        AND id in
+        <if test=" questionId != null and questionId.size()> 0 "> question_id IN
+        <foreach collection="questionId" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        </if>>
+    </select>
+
 </mapper>

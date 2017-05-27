@@ -40,5 +40,12 @@ public interface QuestionBankMapper {
      * @return
      */
     List<QuestionBankInfo> selectQuestion( @Param("reqSelectQuestion") ReqSelectQuestion reqSelectQuestion );
+    /**
+     * 查询题目（支持多ID查询）
+     *
+     * @param questionId
+     * @return
+     */
+    List<QuestionBankInfo> selectQuestionById( @Param("questionId") List<Integer> questionId );
 
 }

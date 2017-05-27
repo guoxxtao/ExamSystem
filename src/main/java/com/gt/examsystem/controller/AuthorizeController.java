@@ -43,7 +43,7 @@ public class AuthorizeController {
      * @param loginDTO 登录请求DTO
      * @return ResBaseDTO
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
     public ResBaseDTO<ResLoginDTO> login( @RequestBody @Validated ReqLoginDTO loginDTO, BindingResult bindingResult, HttpSession httpSession ) {
 
@@ -79,7 +79,7 @@ public class AuthorizeController {
      * @param logoutDTO 登出请求DTO
      * @return ResBaseDTO
      */
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/logout.do", method = RequestMethod.POST)
     @ResponseBody
     public ResBaseDTO<String> logout( @RequestBody @Validated ReqLogoutDTO logoutDTO, BindingResult bindingResult, HttpSession httpSession ) {
         if (LOGGER.isDebugEnabled()) {

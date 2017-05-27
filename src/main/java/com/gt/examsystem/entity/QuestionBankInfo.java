@@ -27,6 +27,18 @@ public class QuestionBankInfo {
     * 题目解析
     * */
     private String questionParse;
+    /**
+     * 题目知识点ID
+     */
+    private Integer questionDirectionId;
+
+    public Integer getQuestionDirectionId() {
+        return questionDirectionId;
+    }
+
+    public void setQuestionDirectionId(Integer questionDirectionId) {
+        this.questionDirectionId = questionDirectionId;
+    }
 
     public Integer getQuestionId() {
         return questionId;

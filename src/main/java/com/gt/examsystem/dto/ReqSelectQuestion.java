@@ -4,26 +4,36 @@ package com.gt.examsystem.dto;
  * Created by guotao on 2017/5/5.
  */
 public class ReqSelectQuestion {
-    /**
-    * 模糊查询题目
-    * */
-    private String questionTitleLike;
+	/**
+	 * 模糊查询题目
+	 */
+	private String questionTitleLike;
 
-    private String questionId;
+	private Integer questionId;
 
-    public String getQuestionTitleLike() {
-        return questionTitleLike;
-    }
+	private Integer questionDirectionId;
 
-    public void setQuestionTitleLike( String questionTitleLike ) {
-        this.questionTitleLike = questionTitleLike;
-    }
+	public Integer getQuestionDirectionId() {
+		return questionDirectionId;
+	}
 
-    public String getQuestionId() {
-        return questionId;
-    }
+	public void setQuestionDirectionId(Integer questionDirectionId) {
+		this.questionDirectionId = questionDirectionId;
+	}
 
-    public void setQuestionId( String questionId ) {
-        this.questionId = questionId;
-    }
+	public String getQuestionTitleLike() {
+		return questionTitleLike;
+	}
+
+	public void setQuestionTitleLike(String questionTitleLike) {
+		this.questionTitleLike = questionTitleLike;
+	}
+
+	public Integer getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(Integer questionId) {
+		this.questionId = questionId;
+	}
 }

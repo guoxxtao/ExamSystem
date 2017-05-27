@@ -8,6 +8,7 @@ import java.util.List;
  * Created by guotao on 2017/5/8.
  */
 public class ResSelectQuestionDTO {
+
     List<QuestionBankInfo> questionBankInfoList;
 
     private List<QuestionBankInfo> getQuestionBankInfoList() {

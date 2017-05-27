@@ -31,7 +31,7 @@ public class QuestionBankController {
     @Qualifier("questionBankServiceImpl")
     private QuestionBankService questionBankService;
 
-    @RequestMapping(value = "/addQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/addQuestion.do", method = RequestMethod.POST)
     @ResponseBody
     public ResBaseDTO<String> addQuestion( @RequestBody @Validated ReqAddQuestion reqAddQuestion, BindingResult bindingResult, HttpSession httpSession ) {
 
@@ -56,7 +56,7 @@ public class QuestionBankController {
         return resBaseDTO;
     }
 
-    @RequestMapping(value = "/deleteQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteQuestion.do", method = RequestMethod.POST)
     @ResponseBody
     public ResBaseDTO<String> deleteQuestion( @RequestBody ReqQuestionDTO reqQuestionDTO, HttpSession httpSession ) {
 
@@ -74,7 +74,7 @@ public class QuestionBankController {
         return resBaseDTO;
     }
 
-    @RequestMapping(value = "/updateQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateQuestion.do", method = RequestMethod.POST)
     @ResponseBody
     public ResBaseDTO<String> updateQuestion( @RequestBody ReqUpdateQuestion reqUpdateQuestion, HttpSession httpSession ) {
 
@@ -92,7 +92,7 @@ public class QuestionBankController {
         return resBaseDTO;
     }
 
-    @RequestMapping(value = "/selectQuestion", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectQuestion.do", method = RequestMethod.POST)
     @ResponseBody
     public ResBaseDTO<List<QuestionBankInfo>> selectQuestion( @RequestBody ReqSelectQuestion reqSelectQuestion, HttpSession httpSession ) {
 
@@ -103,6 +103,24 @@ public class QuestionBankController {
         ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
 
         resBaseDTO = questionBankService.selectQuestion(reqSelectQuestion);
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("selectQuestion(resBaseDTO = {}) - end", resBaseDTO);
+        }
+        return resBaseDTO;
+    }
+
+    @RequestMapping(value = "/selectQuestionById.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ResBaseDTO<List<QuestionBankInfo>> selectQuestionById( @RequestBody List<Integer> questionId) {
+
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("selectQuestionById(questionId = {}) - start", questionId);
+        }
+
+        ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
+
+        resBaseDTO = questionBankService.selectQuestionById(questionId);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("selectQuestion(resBaseDTO = {}) - end", resBaseDTO);
