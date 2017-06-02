@@ -71,8 +71,11 @@
             question_title LIKE
             '%'||'#{reqSelectQuestion.questionTitleLike , jdbcType = VARCHAR }'||'%'
         </if>
-        <if test=" reqSelectQuestion.questionDirectionId != null and reqSelectQuestion.questionId != '' "> AND question_direction_id =
+        <if test=" reqSelectQuestion.questionDirectionId != null and reqSelectQuestion.questionDirectionId != '' "> AND question_direction_id =
             #{reqSelectQuestion.questionDirectionId , jdbcType = INTEGER }
+        </if>
+        <if test=" reqSelectQuestion.questionType != null and reqSelectQuestion.questionType != '' "> AND question_type =
+            #{reqSelectQuestion.questionType , jdbcType = INTEGER }
         </if>
     </select>
 

@@ -5,13 +5,19 @@ package com.gt.examsystem.dto;
  */
 public class ReqSelectQuestion {
 	/**
-	 * 模糊查询题目
+	 * 模糊字段查询题目
 	 */
 	private String questionTitleLike;
 
 	private Integer questionId;
-
+	/**
+	 * 题目知识点
+	 */
 	private Integer questionDirectionId;
+	/**
+	 * 题目类型
+	 */
+	private Integer questionType;
 
 	public Integer getQuestionDirectionId() {
 		return questionDirectionId;
@@ -35,5 +41,13 @@ public class ReqSelectQuestion {
 
 	public void setQuestionId(Integer questionId) {
 		this.questionId = questionId;
+	}
+
+	public Integer getQuestionType() {
+		return questionType;
+	}
+
+	public void setQuestionType(Integer questionType) {
+		this.questionType = questionType;
 	}
 }

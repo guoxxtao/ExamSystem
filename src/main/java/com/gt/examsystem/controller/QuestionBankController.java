@@ -112,15 +112,15 @@ public class QuestionBankController {
 
     @RequestMapping(value = "/selectQuestionById.do", method = RequestMethod.POST)
     @ResponseBody
-    public ResBaseDTO<List<QuestionBankInfo>> selectQuestionById( @RequestBody List<Integer> questionId) {
+    public ResBaseDTO<List<QuestionBankInfo>> selectQuestionById(@RequestBody List<String> questionIds) {
 
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("selectQuestionById(questionId = {}) - start", questionId);
+            LOGGER.debug("selectQuestionById(questionId = {}) - start", questionIds);
         }
 
         ResBaseDTO<List<QuestionBankInfo>> resBaseDTO = new ResBaseDTO<List<QuestionBankInfo>>();
 
-        resBaseDTO = questionBankService.selectQuestionById(questionId);
+//        resBaseDTO = questionBankService.selectQuestionById(questionIds);
 
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("selectQuestion(resBaseDTO = {}) - end", resBaseDTO);

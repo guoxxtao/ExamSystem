@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gt.examsystem.mapper.ExamPaperInfoMapper">
+    <!-- 解决表名与字段不匹配 -->
+
+    <insert id="insertExamInfo" >
+        INSERT INTO t_exam_info
+        (exam_id,exam_start_time,exam_end_time,exam_time_length,teacher_id,option_score,option_number,fillIn_score,fillIn_number,question_score,question_number,total_score)
+        VALUES ( #{reqInsertExamInfo.examId, jdbcType=INTEGER },
+        #{reqInsertExamInfo.examStartTime, jdbcType=TIMESTAMP },
+        #{reqInsertExamInfo.examEndTime, jdbcType=TIMESTAMP },
+        #{reqInsertExamInfo.examTimeLength, jdbcType=INTEGER },
+        #{reqInsertExamInfo.teacherId, jdbcType=INTEGER },
+        #{reqInsertExamInfo.optionScore, jdbcType=DOUBLE },
+        #{reqInsertExamInfo.optionNumber, jdbcType=INTEGER },
+        #{reqInsertExamInfo.fillInScore, jdbcType=DOUBLE },
+        #{reqInsertExamInfo.fillInNumber, jdbcType=INTEGER },
+        #{reqInsertExamInfo.questionScore, jdbcType=DOUBLE },
+        #{reqInsertExamInfo.questionNumber, jdbcType=INTEGER },
+        #{reqInsertExamInfo.totalScore, jdbcType=DOUBLE }
+        )
+    </insert>
+
+    <insert id="createOption" parameterType="java.util.List">
+        INSERT INTO t_exam_question_info
+        (exam_id,option_score,question_id)
+        VALUES
+        <foreach collection="reqCreateOption.questionId" item="questionId" index="index" separator=",">
+        (
+        #{reqCreateOption.examId, jdbcType=INTEGER },
+        #{reqCreateOption.optionScore, jdbcType=DOUBLE },
+        #{questionId}
+        )
+        </foreach>
+    </insert>
+
+    <select id="selectQuestionId" resultMap="resultMap" resultType="java.util.List">
+        SELECT question_id FROM t_question_bank
+        WHERE usable_state = 1
+        AND question_type = #{question_type , jdbcType=INTEGER}
+        ORDER BY RAND()
+        LIMIT <if test=" count != null and count != '' "> #{count , jdbcType = INTEGER }</if>
+    </select>
+</mapper>
